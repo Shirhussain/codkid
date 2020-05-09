@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 class Khodi(models.Model):
-	title = models.CharField(max_length=50, unique=True)
+	title 		= models.CharField(max_length=50, unique=True)
 	description = models.TextField()
 	timestamp   = models.DateTimeField(default=timezone.now)
 	slug        = models.SlugField(editable=False)
@@ -13,7 +13,7 @@ class Khodi(models.Model):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse("khodi:khodidetail",kwargs={"slug":self.slug})
+		return reverse("khodi:khodi",kwargs={"slug":self.slug})
 
 
 	def save(self, *args, **kwargs):
@@ -26,16 +26,17 @@ class Khodi(models.Model):
 class Post(models.Model):
 	title 	  = models.CharField(max_length=60, unique=True)
 	content   = models.TextField()
-	slug      = models.SlugField(editable=False)
 	submitted = models.DateField(default=timezone.now)
 	khodi     = models.ForeignKey(Khodi, on_delete=models.CASCADE)
 	topic     = models.CharField(max_length=20)
+	slug      = models.SlugField(editable=False)
 
 	def __str__(self):
 		return self.title 
 
 	def get_absolute_url(self):
-		return reverse("khodi:post", kwargs={"slug":self.slug})
+		return reverse("khodi:post", kwargs={"khodi_slug":self.khodi.slug,
+			                                 "post_slug":self.slug})
 
 	def save(self, *args, **kwargs):
 		if not self.pk:
@@ -52,7 +53,9 @@ class Example(models.Model):
 		return self.name
 
 	def get_absolute_url(self):
-		return reverse("khodi:example", kwargs={"slug":self.slug})
+		return reverse("khodi:example", kwargs={"khodi_slug":self.post.khodi.slug,
+												"post_slug":self.post.slug,
+												"example_slug":self.slug})
 
 	def save(self,*args, **kwargs):
 		if not self.pk:

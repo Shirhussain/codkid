@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} {{example.title}} {% endblock %}
+
+{% block title %}
+	<main>
+		<a href="{% url 'khodi:post' example.post.khodi.slug example.post.slug %}">Back</a>
+		<h3>Examples</h3>
+		<h2>{{ example.name }}</h2>
+		<div class="example-content">
+			<p>
+				<pre>
+					<code>
+						{{example.code}}
+					</code>
+				</pre>
+			</p>
+		</div>
+	</main>
+{% endblock %}

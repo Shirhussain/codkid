@@ -21,4 +21,25 @@ object
 {{object}}<br>
 {{object.description}}
 
+
+<br><br>
+here is the new one ----> 
+
+{{posts}}
+
+{% for post in posts %}
+	{{post.title}}
+	<a href="{post.get_absolute_url}}">{{post.title}}</a>
+{% endfor %}
+
+<section id="khodi-posts">
+	<ul>
+		{% for post in posts %}
+		{{post.timestamp}}
+			<li><a href="{{post.get_absolute_url}}">{{post.title}}</a></li>
+			<li>{{post.name}}</li>
+		{% endfor %}
+	</ul>
+</section>
+
 {% endblock %}

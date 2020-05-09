@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{post.khodi.title}} {% endblock %}
+
+{% block title %}
+	<main>
+		<a href="{% url 'khodi:khodi' post.khodi.slug %}">Back</a>
+		<h2>{{post.title}}</h2>
+		<div class="post-content">
+			<p>
+				{{post.content}}
+			</p>
+		</div>
+
+		<div class="example-content">
+			<ul>
+				{% for example in examples %}
+					<li>
+						<a href="{{ example.get_absolute_url }}">{{example.name}}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>	
+	</main>
+{% endblock %}
